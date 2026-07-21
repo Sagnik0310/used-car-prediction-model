@@ -1,31 +1,23 @@
-import os
-
-from dotenv import load_dotenv
+import streamlit as st
 from pymongo import MongoClient
 
 
-load_dotenv()
-
-
 class MongoDBConnection:
-    """
-    Handles MongoDB Atlas connection.
-    """
 
     def __init__(self):
 
         self.client = MongoClient(
-            os.getenv("MONGODB_URI")
+            st.secrets["MONGODB_URI"]
         )
 
         self.database = self.client[
-            os.getenv("DATABASE_NAME")
+            st.secrets["DATABASE_NAME"]
         ]
 
     def get_collection(self):
 
         return self.database[
-            os.getenv("COLLECTION_NAME")
+            st.secrets["COLLECTION_NAME"]
         ]
 
     def close_connection(self):
